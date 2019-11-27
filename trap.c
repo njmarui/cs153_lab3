@@ -80,8 +80,8 @@ trap(struct trapframe *tf)
   
   //cs lab3  
   case T_PGFLT:
-    if(rcr2() <(STACKTOP-myproc()->stackpages*PGSIZE)){  //check the offending address in CR2(Control Register)
-	if(allocuvm(myproc()->pgdir, STACKTOP-myproc()->stackpages*PGSIZE-PGSIZE, STACKTOP-myproc()->stackpages*PGSIZE)==0){ //try to allocate one page more
+    if(rcr2() <(PGROUNDUP(STACKTOP-myproc()->stackpages*PGSIZE))){  //check the offending address in CR2(Control Register)
+	if(allocuvm(myproc()->pgdir, PGROUNDUP(STACKTOP-myproc()->stackpages*PGSIZE)-PGSIZE, PGROUNDUP(STACKTOP-myproc()->stackpages*PGSIZE))==0){ //try to allocate one page more
 		cprintf("case T_PGFLT from trap.c: allocuvm failed. Number of current allocated pages: %d\n", myproc()->stackpages); //if allocation not successful, print error message, exit 
 		exit();
 	}
