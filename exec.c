@@ -64,6 +64,7 @@ exec(char *path, char **argv)
   if((sp=allocuvm(pgdir, PGROUNDUP(STACKTOP-PGSIZE), STACKTOP)) == 0)    //allocate memory from STACKTOP-PGSIZE to STACKTOP is and assign sp with the value of newsz
     goto bad;
   curproc->stackpages = 1;   //set stackpages with value 1
+  cprintf("Initial number of pages by the process: %d\n",curproc->stackpages);  //print stackpages
   //cs153 lab3
   
 
